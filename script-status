@@ -1,41 +1,59 @@
 #Akelelo steve  ce script a été fait le 10/12/2021
+
+
 #!/usr/bin/python
 
+## PACKAGE SYS :
+## Déclaration du package nécessaire pour
+## l'utilisation de certaines procédures comme argv permettant de
+## définir le nombre d'arguments passés comme paramètres du script
 import sys
-from os.path import pardir
+
+## PACKAGE SUBPROCESS :
+# Déclaration du package servant à utiliser la procédure run nécessaire
+# exécuter directement certaines lignes de commande comme des commandes shell
 import subprocess
 
 
 # Récupération des paramètres du script
 LISTE_SERVICE = sys.argv[1:]
 
-# Si aucun paramètre, traitement de tous les services
-if len(LISTE_SERVICE) == 0:
-    print("systemctl status isc-dhcp-server")
-    subprocess.run("systemctl status isc-dhcp-server",shell=True, check=True)
-    print("systemctl status bind9.service")
-    subprocess.run("systemctl status bind9.service",shell=True, check=True)
-    print("systemctl status chrony")
-    subprocess.run("systemctl status chrony",shell=True, check=True)
-    print("systemctl status squid")
-    subprocess.run("systemctl status squid",shell=True, check=True)
-
-# Si paramètre, traitement du service spécifié s'il en fait partie des
-# quatres services disponibles (DHCP, DNS, NTP, SQUID)
-else:
+## Si au moins un paramètre est saisi parmi dhcp, dns, ntp et squid,
+## on exécute la ligne de commande correspondant au service demandé
+## Et si le paramètre saisi ne figure pas dans la liste mentionnée ci-dessus,
+## un message s'affiche pour indiquer qu'il n'existe pas de traitement prévu pour ce paramètre
+if len(LISTE_SERVICE)>=1:
+    ## On parcourt la liste des paramètres par la boucle for
     for mon_service in LISTE_SERVICE:
+        ## Si dhcp ou DHCP, on retourne le statut dhcp
         if mon_service in ["dhcp","DHCP"]:
             print("systemctl status isc-dhcp-server")
-           subprocess.run("systemctl status isc-dhcp-server",shell=True, check=True) 
+            subprocess.run("systemctl status isc-dhcp-server",shell=True, check=True)
+
+        ## Si dns ou DNS, on retourne le statut dns
         if mon_service in ["dns","DNS"]:
             print("systemctl status bind9.service")
             subprocess.run("systemctl status bind9.service",shell=True, check=True)
+
+        ## Si ntp ou NTP, on retourne le statut ntp
         if mon_service in ["ntp","NTP"]:
             print("systemctl status chrony")
             subprocess.run("systemctl status chrony",shell=True, check=True)
+
+        ## Si squid ou SQUID, on retourne le statut squid
         if mon_service in ["squid","SQUID"]:
             print("systemctl status squid")
-             subprocess.run("systemctl status squid",shell=True, check=True)
+            subprocess.run("systemctl status squid",shell=True, check=True)
+
+        ## Si rien parmi les cas cités ci-dessus, afficher un message d'avertissement pour
+        ## indiquer que le traitemnet n'est pas disponible pour ce paramètre
         if mon_service not in ["dhcp","DHCP","dns","DNS", "ntp","NTP","squid","SQUID"]:
             print("Traitement non disponible pour le service demandé :",mon_service)
 
+## Si aucun paramètre saisi, afficher un message d'avertissement pour appeler à saisir
+## au moins un traitement. Plusieurs traitements peuvent être demandés à la fois en une seule
+## ligne de commandes
+else:
+    print("ATTENTION !! ")
+    print("- Vous n'avez saisi aucun paramètre")
+    print("- Merci de saisir votre paramètre parmi [dhcp, dns, ntp et squid] pour un traitement géré par le script")
