@@ -1,0 +1,41 @@
+#Akelelo steve  ce script a été fait le 10/12/2021
+#!/usr/bin/python
+
+import sys
+from os.path import pardir
+import subprocess
+
+
+# Récupération des paramètres du script
+LISTE_SERVICE = sys.argv[1:]
+
+# Si aucun paramètre, traitement de tous les services
+if len(LISTE_SERVICE) == 0:
+    print("systemctl status isc-dhcp-server")
+    subprocess.run("systemctl status isc-dhcp-server",shell=True, check=True)
+    print("systemctl status bind9.service")
+    subprocess.run("systemctl status bind9.service",shell=True, check=True)
+    print("systemctl status chrony")
+    subprocess.run("systemctl status chrony",shell=True, check=True)
+    print("systemctl status squid")
+    subprocess.run("systemctl status squid",shell=True, check=True)
+
+# Si paramètre, traitement du service spécifié s'il en fait partie des
+# quatres services disponibles (DHCP, DNS, NTP, SQUID)
+else:
+    for mon_service in LISTE_SERVICE:
+        if mon_service in ["dhcp","DHCP"]:
+            print("systemctl status isc-dhcp-server")
+           subprocess.run("systemctl status isc-dhcp-server",shell=True, check=True) 
+        if mon_service in ["dns","DNS"]:
+            print("systemctl status bind9.service")
+            subprocess.run("systemctl status bind9.service",shell=True, check=True)
+        if mon_service in ["ntp","NTP"]:
+            print("systemctl status chrony")
+            subprocess.run("systemctl status chrony",shell=True, check=True)
+        if mon_service in ["squid","SQUID"]:
+            print("systemctl status squid")
+             subprocess.run("systemctl status squid",shell=True, check=True)
+        if mon_service not in ["dhcp","DHCP","dns","DNS", "ntp","NTP","squid","SQUID"]:
+            print("Traitement non disponible pour le service demandé :",mon_service)
+
