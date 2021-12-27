@@ -12,7 +12,7 @@ Ce script lancé au démarrage nous permet de connaitre aussi les services qui n
 
 Prérequis :
 
-Un serveur ubuntu 20.04 
+Un serveur ubuntu 20.04 sur lequel :
 
 Installation d'un service dhcp sur un serveur existant
 
