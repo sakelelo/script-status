@@ -13,9 +13,13 @@ Ce script lancé au démarrage nous permet de connaitre aussi les services qui n
 Prérequis :
 
 Un serveur ubuntu 20.04 
+
 Installation d'un service dhcp sur un serveur existant
+
 Installation d'un service dns sur un serveur existant
+
 Installation d'un service squid sur un serveur existant
+
 Installation d'un service ntp sur un serveur existant
 
 
